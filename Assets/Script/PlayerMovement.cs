@@ -15,6 +15,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(forwardForce < 50)
+        {
+            forwardForce = 25 + (this.transform.position.z / 50);
+        }
+        
         // rb.velocity = new Vector3(0f, 0f,15f);
 
         // Adding forward Force
