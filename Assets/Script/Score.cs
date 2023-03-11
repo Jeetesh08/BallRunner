@@ -20,6 +20,8 @@ public class Score : MonoBehaviour
     public Transform player;
     public TMPro.TMP_Text scoreText;
     public TMPro.TMP_Text highscoreText;
+    public TMPro.TMP_Text speed;
+    public PlayerMovement movement;
 
     public GameManager gameManager;
 
@@ -27,7 +29,7 @@ public class Score : MonoBehaviour
     private int highscore = 0;
     private void Start()
     { 
-        highscoreText.text = "Highscore: " + PlayerPrefs.GetInt("Highscore", 0);
+        highscoreText.text = "HIGHSCORE: " + PlayerPrefs.GetInt("Highscore", 0);
         highscore = PlayerPrefs.GetInt("Highscore", 0);
     }
     // Update is called once per frame
@@ -50,8 +52,12 @@ public class Score : MonoBehaviour
         else
         {
             score++;
-            scoreText.text = "Score: " + score;
+            scoreText.text = "SCORE: " + score;
         }
+
+        speed.text = "SPEED :" + movement.forwardForce.ToString("f1");
+
+
         // Update highscore text
     }
 }
