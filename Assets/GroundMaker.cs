@@ -29,9 +29,9 @@ public class GroundMaker : MonoBehaviour
     }
     private void SpawnBlocks()
     {
-        GameObject go = Instantiate(blocksPref) as GameObject;
+        GameObject go = Instantiate(blocksPref);
         go.transform.SetParent(transform);
         go.transform.position = Vector3.forward * spawnZ;
-        spawnZ += blockLen; 
+        spawnZ += blockLen;
     }
 }

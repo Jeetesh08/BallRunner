@@ -11,19 +11,31 @@ public class PlayerMovement : MonoBehaviour
     private bool moveLeft; // Whether the player should move left
     private bool moveRight;
 
+    public AudioSource audio;
+    public static PlayerMovement instance;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+    private void Start()
+    {
+        audio = GetComponent<AudioSource>();
+        audio.Play();
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
         if(forwardForce < 50)
         {
-            forwardForce = 25 + (this.transform.position.z / 50);
+            forwardForce = 12 + (this.transform.position.z / 50);
         }
         
         // rb.velocity = new Vector3(0f, 0f,15f);
 
         // Adding forward Force
         rb.AddForce(0, 0, forwardForce * Time.deltaTime, ForceMode.VelocityChange);
+        
 
         if (Input.GetKey("d")||Input.GetKey("right"))
         {
