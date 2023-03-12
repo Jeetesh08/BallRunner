@@ -13,20 +13,11 @@ public class obstaclemanager : MonoBehaviour
         {
             int randomIndex1 = Random.Range(3,6);
 
-            if(PlayerMovement.instance.forwardForce > 25)
-            {
-                for (int i = 3; i < 6; i++)
-                {
-                    
-                    this.transform.GetChild(i).gameObject.SetActive(true);
-                }
-                this.transform.GetChild(randomIndex1).gameObject.SetActive(false);
-            }
-            else
-            {
+            
+            
             this.transform.GetChild(randomIndex1).gameObject.SetActive(true);
 
-            }
+            
 
         }
     }
