@@ -640,12 +640,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3388705374750293800, guid: 90d400162b151c646b0f9fc83bf3a949, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 3388705374750293805, guid: 90d400162b151c646b0f9fc83bf3a949, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8b9c99222a4253043be04dc3a95d8efd, type: 2}
+      objectReference: {fileID: 2100000, guid: a5c8deeacd49fe44bb83e8681f0ed092, type: 2}
     - target: {fileID: 3388705374750293807, guid: 90d400162b151c646b0f9fc83bf3a949, type: 3}
       propertyPath: m_UseGravity
       value: 0
