@@ -24,11 +24,13 @@ public class Score : MonoBehaviour
     public PlayerMovement movement;
 
     public GameManager gameManager;
-
+    public PlayfabManager playfabManager;
     private int score = 0;
     private int highscore = 0;
+    bool highScoreUpdate;
     private void Start()
-    { 
+    {
+        highScoreUpdate = false;
         highscoreText.text = "HIGHSCORE: " + PlayerPrefs.GetInt("Highscore", 0);
         highscore = PlayerPrefs.GetInt("Highscore", 0);
     }
@@ -44,6 +46,11 @@ public class Score : MonoBehaviour
                 highscore = score;
                 PlayerPrefs.SetInt("Highscore", score);
                 PlayerPrefs.Save();
+            }
+            if (!highScoreUpdate)
+            {
+                highScoreUpdate = true;
+                playfabManager.SendLeaderboard(highscore);
             }
             // Reset score
             score = 0;

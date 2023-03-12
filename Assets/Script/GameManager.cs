@@ -11,10 +11,14 @@ public class GameManager : MonoBehaviour
     public float restartDelay = 2f;
     public AudioSource audio;
     public GameObject gameOver;
+    public GameObject pauseMenu;
     public PlayerMovement movement;
-
+    public AudioSource buttonAudio;
     
-   public void EndGame()
+    int maxPlatform = 10;
+
+
+    public void EndGame()
     {
         
         if (gameHasEnded == false)
@@ -24,6 +28,8 @@ public class GameManager : MonoBehaviour
             gameOver.SetActive(true);
             movement.forwardForce = 0;
             audio.Stop();
+
+            
             
 
             //Invoke("Restart", restartDelay);
@@ -32,8 +38,9 @@ public class GameManager : MonoBehaviour
     }
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name );
-        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex );
+        Time.timeScale = 1;
+        buttonAudio.Play();
         audio.Play();
     }
 
@@ -41,5 +48,21 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
         Time.timeScale = 1;
+        buttonAudio.Play();
+    }
+    public void Continue()
+    {
+        Time.timeScale = 1;
+        buttonAudio.Play();
+        audio.Play();
+        pauseMenu.SetActive(false);
+    }
+
+    public void PauseButton()
+    {
+        Time.timeScale = 0;
+        pauseMenu.SetActive(true);
+        buttonAudio.Play();
+        audio.Pause();
     }
 }
