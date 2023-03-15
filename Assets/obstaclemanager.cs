@@ -4,24 +4,12 @@ using UnityEngine;
 
 public class obstaclemanager : MonoBehaviour
 {
-   // Start is called before the first frame update
+    // Start is called before the first frame update
     void Start()
     {
-        int randomIndex = Random.Range(0,3);
+        int randomIndex = Random.Range(0, 3);
         this.transform.GetChild(randomIndex).gameObject.SetActive(true);
-        if (PlayerMovement.instance.forwardForce > 18)
-        {
-            int randomIndex1 = Random.Range(3,6);
-
-            
-            
-            this.transform.GetChild(randomIndex1).gameObject.SetActive(true);
-
-            
-
-        }
     }
-   
 }
 
 //using System.Collections;
