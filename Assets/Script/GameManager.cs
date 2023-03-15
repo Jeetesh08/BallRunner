@@ -14,8 +14,11 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public PlayerMovement movement;
     public AudioSource buttonAudio;
-    
+    public Score score;
+    public bool isPaused = true;
     int maxPlatform = 10;
+    public TMPro.TMP_Text scoreText;
+    public TMPro.TMP_Text highScoreText;
 
 
     public void EndGame()
@@ -28,10 +31,9 @@ public class GameManager : MonoBehaviour
             gameOver.SetActive(true);
             movement.forwardForce = 0;
             audio.Stop();
-
-            
-            
-
+            scoreText.text = "Score: "+ Score.instance.player.position.z.ToString("0");
+            highScoreText.text = "Highscore: " + PlayerPrefs.GetInt("Highscore", 0);
+            Time.timeScale = 0;
             //Invoke("Restart", restartDelay);
         }
         
@@ -56,6 +58,7 @@ public class GameManager : MonoBehaviour
         buttonAudio.Play();
         audio.Play();
         pauseMenu.SetActive(false);
+        
     }
 
     public void PauseButton()
@@ -64,5 +67,6 @@ public class GameManager : MonoBehaviour
         pauseMenu.SetActive(true);
         buttonAudio.Play();
         audio.Pause();
+  
     }
 }

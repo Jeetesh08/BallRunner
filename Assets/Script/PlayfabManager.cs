@@ -27,7 +27,11 @@ public class PlayfabManager : MonoBehaviour
     }
     void Start()
     {
-         Login(); 
+         Login();
+        if (PlayerPrefs.HasKey("Displayname"))
+        {
+            display.SetActive(false);
+        }
     }
 
     public void RegisterButton()
@@ -95,7 +99,7 @@ public class PlayfabManager : MonoBehaviour
     void OnSuccess(LoginResult result)
     {
         Debug.Log("Successful login/Account create!");
-        messageText.text = "Logged in!";
+        //messageText.text = "Logged in!";
         GetTitleData();
         string name = null;
         if(result.InfoResultPayload.PlayerProfile !=null)
@@ -195,7 +199,7 @@ public class PlayfabManager : MonoBehaviour
             Debug.Log("No Message!");
             return;
         }
-        //messageText.text = result.Data["Message"];
+       messageText.text = result.Data["Message"];
     }
 
     public void MenuScreen()
