@@ -5,6 +5,7 @@ using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 public class PlayfabManager : MonoBehaviour
 {
 
@@ -17,8 +18,15 @@ public class PlayfabManager : MonoBehaviour
     public GameObject login;
     public GameObject leaderboard;
     public GameObject display;
+    public GameObject userNameDisplay;
     public TMPro.TMP_InputField usernameInput;
-    
+
+    public TMPro.TMP_Text usernameDisplayText;
+    public TMP_Text usernameDisplayText1;
+    public TMP_Text highscoreText;
+    public TMP_Text rankText;
+    string MYid;
+
 
 
     public void LoginScreenActive()
@@ -27,7 +35,8 @@ public class PlayfabManager : MonoBehaviour
     }
     void Start()
     {
-         Login();
+        Login();
+        usernameDisplayText.text = PlayerPrefs.GetString("Displayname");
         if (PlayerPrefs.HasKey("Displayname"))
         {
             display.SetActive(false);
@@ -106,8 +115,11 @@ public class PlayfabManager : MonoBehaviour
              name = result.InfoResultPayload.PlayerProfile.DisplayName;
         if(!PlayerPrefs.HasKey("Displayname"))
         {
-            Invoke("Display", 2f);
+            Invoke("Display", 0);
         }
+        MYid = result.PlayFabId;
+        PlayerPrefs.SetString("Displayname", name);
+
     }
     public void SubmitNameButton()
     {
@@ -123,8 +135,9 @@ public class PlayfabManager : MonoBehaviour
     {
         display.SetActive(false);
         PlayerPrefs.SetString("Displayname", result.DisplayName);
+        usernameDisplayText.text = PlayerPrefs.GetString("Displayname");
     }
-    void Display()
+   public  void Display()
     {
         display.SetActive(true);
         login.SetActive(false);
@@ -132,12 +145,13 @@ public class PlayfabManager : MonoBehaviour
 
     void OnError(PlayFabError error)
     {
-        Debug.Log("Error while logging in/ creating account!");
+        Debug.Log("Error while logging in/ creating account/sending score!");
         Debug.Log(error.GenerateErrorReport());
         messageText.text = error.ErrorMessage;
     }
-    public void SendLeaderboard(int score)
+    public void SendLeaderboard(float score)
     {
+        int statvalue = (int)score;
         var request = new UpdatePlayerStatisticsRequest
         {
             Statistics = new List<StatisticUpdate>
@@ -145,7 +159,7 @@ public class PlayfabManager : MonoBehaviour
                 new StatisticUpdate
                 {
                     StatisticName = "PlatformScore",
-                    Value = score
+                    Value = statvalue
                 }
             }
         };
@@ -165,7 +179,7 @@ public class PlayfabManager : MonoBehaviour
         };
         PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
         buttonAudio.Play();
-        Invoke("LeaderboardScreen", 2f);
+        Invoke("LeaderboardScreen", 0);
     }
     public GameObject prefab;
     public GameObject parent;
@@ -173,10 +187,20 @@ public class PlayfabManager : MonoBehaviour
     {
         foreach (var item in result.Leaderboard)
         {
-            Debug.Log((item.Position +1 ).ToString()+ " " + item.DisplayName + " " + item.StatValue);
+            if(item.PlayFabId == MYid)
+            {
+                PlayerPrefs.SetInt("rank", item.Position + 1);
+            }
             GameObject go = Instantiate(prefab, transform.position,Quaternion.identity);
             go.transform.GetChild(0).GetComponent<TMPro.TMP_Text>().text = (item.Position+1).ToString();
-            go.transform.GetChild(1).GetComponent<TMPro.TMP_Text>().text = item.DisplayName.ToString();
+            if(item.DisplayName != null)
+            {
+                go.transform.GetChild(1).GetComponent<TMPro.TMP_Text>().text = item.DisplayName.ToString();
+            }
+            else
+            {
+                go.transform.GetChild(1).GetComponent<TMPro.TMP_Text>().text = "Ball runner player";
+            }
             go.transform.GetChild(2).GetComponent<TMPro.TMP_Text>().text = item.StatValue.ToString();
             go.transform.SetParent(parent.transform, false);
         }
@@ -206,5 +230,20 @@ public class PlayfabManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         buttonAudio.Play();
+    }
+
+    public void UserNameDisplay()
+    {
+        userNameDisplay.SetActive(true);
+        buttonAudio.Play();
+        
+        usernameDisplayText1.text = "UserName : " + PlayerPrefs.GetString("Displayname");
+        highscoreText.text = "Highscore : " + PlayerPrefs.GetFloat("Highscore").ToString("0");
+        rankText.text = "Rank : " + PlayerPrefs.GetInt("rank", 0);
+    }
+    public void ChangeUserNameButton()
+    {
+        display.SetActive(true);
+        userNameDisplay.SetActive(false);
     }
 }
