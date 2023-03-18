@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
             movement.forwardForce = 0;
             audio.Stop();
             scoreText.text = "Score: "+ Score.instance.player.position.z.ToString("0");
-            highScoreText.text = "Highscore: " + PlayerPrefs.GetInt("Highscore", 0);
+            highScoreText.text = "Highscore: " + PlayerPrefs.GetFloat("Highscore").ToString("0");
             Time.timeScale = 0;
             //Invoke("Restart", restartDelay);
         }

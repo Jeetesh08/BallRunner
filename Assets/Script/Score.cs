@@ -1,17 +1,3 @@
-
-//using UnityEngine;
-//using UnityEngine.UI;
-//public class Score : MonoBehaviour
-//{
-//    public Transform player;
-//    public TMPro.TMP_Text scoreText;
-//    void Update()
-//    {
-
-//        scoreText.text ="SCORE :"+ player.position.z.ToString("0");
-//    }
-//}
-
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,8 +12,8 @@ public class Score : MonoBehaviour
 
     public GameManager gameManager;
     public PlayfabManager playfabManager;
-    public int score = 0;
-    private int highscore = 0;
+    public float score = 0;
+    private float highscore = 0;
     bool highScoreUpdate;
 
     private void Awake()
@@ -39,10 +25,9 @@ public class Score : MonoBehaviour
     }
     private void Start()
     {
-        score = 0;
         highScoreUpdate = false;
-        highscoreText.text = "Highscore: " + PlayerPrefs.GetInt("Highscore", 0);
-        highscore = PlayerPrefs.GetInt("Highscore", 0);
+        highscoreText.text = "Highscore: " + PlayerPrefs.GetFloat("Highscore",0).ToString("0");
+        highscore = PlayerPrefs.GetFloat("Highscore", 0);
     }
     // Update is called once per frame
     void Update()
@@ -50,18 +35,22 @@ public class Score : MonoBehaviour
         // Check for player death
         if (gameManager.gameHasEnded)
         {
-            // Update highscore
-            if (score > highscore)
+            gameManager.gameHasEnded = false;
+            if (score > PlayerPrefs.GetFloat("Highscore"))
             {
+                Debug.Log("2");
                 highscore = score;
-                PlayerPrefs.SetInt("Highscore", score);
+                PlayerPrefs.SetFloat("Highscore", highscore);
+                //highscoreText.text = "Highscore: " + PlayerPrefs.GetInt("Highscore");
                 PlayerPrefs.Save();
+                if (!highScoreUpdate)
+                {
+                    Debug.Log("3");
+                    highScoreUpdate = true;
+                    playfabManager.SendLeaderboard(highscore);
+                }
             }
-            if (!highScoreUpdate)
-            {
-                highScoreUpdate = true;
-                playfabManager.SendLeaderboard(highscore);
-            }
+            
             // Reset score
 
             //
@@ -69,11 +58,14 @@ public class Score : MonoBehaviour
         // Update score
 
 
-        scoreText.text = "Score: " + player.position.z.ToString("0");
-        
+        score = player.position.z;
+        scoreText.text = "Score: " + score.ToString("0");
 
         speed.text = "Speed :" + movement.forwardForce.ToString("f1");
-
+        if (score > highscore)
+        {
+            highscoreText.text = "Highscore: " + highscore.ToString("0");
+        }
 
         // Update highscore text
     }
