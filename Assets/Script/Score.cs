@@ -36,7 +36,7 @@ public class Score : MonoBehaviour
         if (gameManager.gameHasEnded)
         {
             gameManager.gameHasEnded = false;
-            if (score > PlayerPrefs.GetFloat("Highscore"))
+            if (score >= PlayerPrefs.GetFloat("Highscore"))
             {
                 Debug.Log("2");
                 highscore = score;
@@ -64,7 +64,7 @@ public class Score : MonoBehaviour
         speed.text = "Speed :" + movement.forwardForce.ToString("f1");
         if (score > highscore)
         {
-            highscoreText.text = "Highscore: " + highscore.ToString("0");
+            highscoreText.text = "Highscore: " +score.ToString("0");
         }
 
         // Update highscore text

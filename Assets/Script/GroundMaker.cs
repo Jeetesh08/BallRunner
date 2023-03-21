@@ -6,11 +6,17 @@ public class GroundMaker : MonoBehaviour
 {
 
     public Transform player;
+    public static GroundMaker instance;
     public GameObject blocksPref;
     public float spawnZ = 0f;
     public float blockLen = 10f;
     private int nbrBlocksInScreen = 5;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         for (int i = 0; i < nbrBlocksInScreen; i++)

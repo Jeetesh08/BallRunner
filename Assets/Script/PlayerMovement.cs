@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(forwardForce < 75)
         {
-            forwardForce = 15 + (this.transform.position.z /40);
+            forwardForce = 15 + (this.transform.position.z /60);
         }
         // rb.velocity = new Vector3(0f, 0f,15f);
 
