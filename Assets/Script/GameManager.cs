@@ -20,7 +20,12 @@ public class GameManager : MonoBehaviour
     public TMPro.TMP_Text scoreText;
     public TMPro.TMP_Text highScoreText;
 
+    public static GameManager instance;
 
+    private void Awake()
+    {
+        instance = this;
+    }
     public void EndGame()
     {
         
@@ -48,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     public void Menu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-2);
         Time.timeScale = 1;
         buttonAudio.Play();
     }

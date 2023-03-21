@@ -246,4 +246,10 @@ public class PlayfabManager : MonoBehaviour
         display.SetActive(true);
         userNameDisplay.SetActive(false);
     }
+
+    public void ShopButton()
+    {
+        SceneManager.LoadScene(1);
+        buttonAudio.Play();
+    }
 }
