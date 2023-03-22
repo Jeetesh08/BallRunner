@@ -53,7 +53,8 @@ public class GameManager : MonoBehaviour
 
     public void Menu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-2);
+        Debug.Log("Menu");
+        SceneManager.LoadScene(0);
         Time.timeScale = 1;
         buttonAudio.Play();
     }

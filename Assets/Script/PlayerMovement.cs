@@ -73,6 +73,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+       
+
         // Move the player left or right based on touch input
         if (moveLeft)
         {
@@ -82,5 +84,13 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(sideWaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
+    }
+
+    public void Right()
+    {
+        rb.AddForce(sideWaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+    }public void Left()
+    {
+        rb.AddForce(-sideWaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
     }
 }

@@ -237,7 +237,7 @@ public class PlayfabManager : MonoBehaviour
         userNameDisplay.SetActive(true);
         buttonAudio.Play();
         
-        usernameDisplayText1.text = "UserName : " + PlayerPrefs.GetString("Displayname");
+        usernameDisplayText1.text =  PlayerPrefs.GetString("Displayname");
         highscoreText.text = "Highscore : " + PlayerPrefs.GetFloat("Highscore").ToString("0");
         rankText.text = "Rank : " + PlayerPrefs.GetInt("rank", 0);
     }

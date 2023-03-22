@@ -64,6 +64,7 @@ public class Score : MonoBehaviour
         speed.text = "Speed :" + movement.forwardForce.ToString("f1");
         if (score > highscore)
         {
+            PlayerPrefs.SetFloat("Highscore", score);
             highscoreText.text = "Highscore: " +score.ToString("0");
         }
 
